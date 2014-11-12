@@ -5,9 +5,9 @@ var jsdom = require('jsdom');
 //page for initial page to begin grabbing reviews from
 //page for last page to grab reviews up to
 //sort is either bySubmissionDate or byPopularity and can be Ascending or Descending
-var id = "B008CS5ZRU",
-    page = 1,
-	endPage = 1,
+var id = "B005VEZ58C",
+    page = 96,
+	endPage = 104,
 	sort = "bySubmissionDateDescending";
 
 var scrape = function(page, endPage) {
@@ -35,8 +35,9 @@ var scrape = function(page, endPage) {
 					$(this).children().remove();
 					
 				
-				  console.log('-----------------------');
-				  console.log('Title: ' + title  + '\nDate: ' + date + '\nHelpfulness:' + $.trim(helpful) + '\nReviewer:' + reviewerName + '\nRating: ' + starRating + '\nReview:' + review + '\n\n');
+				 // console.log('-----------------------');
+				  //console.log('Title: ' + title  + '\nDate: ' + date + '\nHelpfulness:' + $.trim(helpful) + '\nReviewer:' + reviewerName + '\nRating: ' + starRating + '\nReview:' + review + '\n\n');
+				 console.log(review);
 				 // temp += parseReview(title, date, helpful, starRating, review, num, page, endPage);
 				 //temp += parseAverageReview(date, starRating, num, page, endPage);
 				  }

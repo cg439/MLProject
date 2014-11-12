@@ -1,0 +1,164 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2012 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2012,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+\usepackage{enumitem}
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2012} with
+% \usepackage[nohyperref]{icml2012} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+\usepackage{icml2012} 
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Appearing in''
+% \usepackage[accepted]{icml2012}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Submission and Formatting Instructions for ICML 2012}
+
+
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{CS4780 Project Proposal }
+
+\icmlkeywords{boring formatting information, machine learning, ICML}
+
+\vskip 0.3in
+]
+
+\section{Size of Team}
+Size of team is four people. 
+
+\section{Motivation} 
+ 
+Before making a purchase on Amazon.com, buyers typically read reviews of the product to determine if it will meet their requirements. Although reviews are a great resource, it is very time consuming to read a large volume of reviews to find the information that is relevant to them. Although Amazon attempts to shorten this process by ranking its reviews in order of helpfulness, the top reviews may still not be enough for a buyer to make an informed decision. The top reviews may not address all the product features that the buyer is interested in, may be too old to still be reliable, or may still be considered a top review simply because of visibility. 
+
+Furthermore, some buyers may go beyond the top reviews to get a majority opinion instead of relying on a few experiences. To do this, they then have to filter through a large number of irrelevant information and still only get a holistic view of what might be the majority opinion.
+
+To solve this issue, we propose to automatically extract relevant information from the entire set of reviews and present it to the potential buyer in a format that makes it easier to digest and to compare different products.
+
+\section{Statement of Problem and Key Questions} 
+
+Using user reviews, help consumers easily and accurately decide whether a product meets their requirements. 
+
+Key Questions:
+
+\begin{enumerate}
+\item What are the characteristics of the product that reviewers find important?
+\item How do reviewers rate these features?
+\end{enumerate}
+
+\section{General Approach}
+We will restrict our focus to one type of product (headphones) to make evaluation easier. We see 3 main stages to this project:
+
+\begin{enumerate}
+\item Preprocessing stage: Extract relevant product features
+\newline 
+	\begin{enumerate} [label* = \arabic*.]
+	\item	In order to determine if a review contains relevant features, we will extract the product specifications from the product description using a web scraper. Using TFIDF from NLTK we will generate a list of words that have high frequency. These, in addition to the words sound, audio, comfort, base, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects. 
+	\\
+	\item Using the scraper extract all user reviews and split by sentence to generate a list of sentences from all the reviews per product.
+	\end{enumerate}
+\item Processing stage
+	\begin{enumerate} [label* = \arabic*.]
+	\item Using SVM or Naive Bayes annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. 
+	\item Using a parse tree split each sentence into bigrams and trigrams with the grammar format of <adj><noun> to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. Using a hashmap store the phrase with the sentence it came from. Find the frequency of all these phrases in the entire set of sentences from reviews.
+	\end{enumerate}
+\item Post-processing stage: Aggregation
+	\begin{enumerate}[label* = \arabic*.]
+	\item A simple approach would average the sentiment scores from each sentiment the aspect was tagged in giving an output sentiment score for the aspect. We can then output the sentence with highest sentiment score tagged with that aspect with same sign as output sentiment score for the aspect.
+	\end{enumerate}
+\end{enumerate}
+Evaluation: Compare the results to the hand annotated results of the Google research document. 
+
+\section{Progress}
+
+\section{Resources}
+
+Python libraries: Sci-Kit Learn, NLTK, Numpy, Scipy
+
+Resources to extract data from Amazon.com:
+
+\begin{itemize}
+\item Web scraper written in Node.js to parse relevant data (reviews, product descriptions, etc)
+
+\item Amazon product review data mined by Stanford
+\newline
+\url{http://snap.stanford.edu/data/web-Amazon-links.html}
+\end{itemize}
+
+Readings on Parsing \& Sentiment Analysis:
+\begin{itemize}
+\item Stanford paper on parsing \& sentiment analysis:
+\newline
+\url{http://nlp.stanford.edu/~socherr/EMNLP2013_RNTN.pdf}
+
+\item Multi-aspect sentiment analysis
+\newline 
+\url{http://www.cs.cornell.edu/home/cardie/papers/masa-sentire-2011.pdf}
+
+\item Catching the Drift: Probabilistic Content Models, with Applications to
+Generation and Summarization \newline
+\url{http://www.aclweb.org/anthology/N04-1015}
+\end{itemize}
+
+
+\section{Schedule}
+
+By November $11^{th}$, the due date of the progress report, complete the following:
+
+\begin{itemize}
+\item extract data from Amazon.com either via API or self-implemented scraper; alternatively, use the Stanford dataset
+
+\item parse data into JSON or csv
+
+\item filter out irrelevant reviews and weight constructive reviews more
+
+\item extract sentiments from review data
+
+\item create a dashboard GUI to allow users to evaluate and understand data output
+ 
+\end{itemize}
+
+By December $4^{th}$, the due date of the poster, complete:
+\begin{itemize}
+\item aggregate sentiments using the dashboard to deal with conflicting sentiments for same feature by aggregating and displaying them. 
+
+For instance: If 4 people say they like the texture of a phone case, but 6 people say it slips around too much, display 40\% like texture, 60\% dislike texture. 
+
+\item 
+rank sentiments in terms of relevance to consumer requirements (can use combination of either product description, weight from all the reviews that expressed the sentiment, or an alternative method to relate the sentiment back to corpus of reviews and use the frequency to determine rank)
+
+\end{itemize}
+
+Final report due: December $10^{th}$
+\end{document}

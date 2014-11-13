@@ -60,13 +60,13 @@ Size of team is four people.
 
 \section{Motivation} 
  
-Before making a purchase on Amazon.com, buyers typically read reviews of the product to determine if it will meet their requirements. Although reviews are a great resource, it is very time consuming to read through many to find the information that is relevant to buyers. Furthermore, buyers must filter out a large number of unhelpful reviews. Although Amazon attempts to ease the problem by ranking its reviews in order of helpfulness, the top reviews may not address all the product features that the buyer is interested in, may be too old to still be reliable, or may still be considered a top review simply because of visibility. 
+Before making a purchase on Amazon.com, buyers typically read reviews of the product to determine if it will meet their requirements. Although reviews are a great resource, it is very time consuming to read through many to find the information that is relevant to buyers. Furthermore, buyers must filter out a large number of unhelpful reviews. Although Amazon attempts to ease the problem by ranking its reviews in order of helpfulness, the top reviews may not address all the product features that the buyer is interested in, may be too old to still be reliable, or may be considered a top review simply due to visibility. 
 
-To solve this issue, we propose to automatically extract relevant information from the entire set of reviews with their related sentiment and present it in a way that is easier to digest and to compare different products.
+To solve this issue, we propose to automatically extract sentiments from the entire set of reviews and aggregate it in a concise summary.
 
 \section{Statement of Problem and Key Questions} 
 
-Using user reviews, help consumers easily and accurately decide whether a product meets their requirements. 
+Using user reviews, help consumers easily and accurately understand the important sentiments contained in the reviews. 
 
 Key Questions:
 
@@ -82,27 +82,26 @@ We will restrict our focus to one type of product (headphones) to make evaluatio
 \item Preprocessing stage: Extract relevant product features
 \newline 
 	\begin{enumerate} [label* = \arabic*.]
-	\item	In order to determine if a review contains relevant features, we will extract the product specifications from the product description using a web scraper. Using TFIDF from NLTK we will generate a list of words that have high frequency. These, in addition to the words sound, audio, comfort, base, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects. 
 	\\
 	\item Using the scraper extract all user reviews and split by sentence to generate a list of sentences from all the reviews per product.
 	\end{enumerate}
 \item Processing stage
 	\begin{enumerate} [label* = \arabic*.]
-	\item Using SVM or Naive Bayes annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. 
-	\item Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. Using a hashmap store the phrase with the sentence it came from. Find the frequency of all these phrases in the entire set of sentences from reviews.
+	\item Using SVM or Naive Bayes annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. If a sentence has a score below a low threshold then it will be discarded.
+	\item In order to determine if a review contains relevant features, we will use a combined static and dynamic technique to extract the aspect features. The static method will utilize product specifications extracted from the product descriptions of headphones products using a web scraper. Using a TFIDF weighting scheme from NLTK we will generate a list of words that have high relevancy to headphones products. These, in addition to the words sound, audio, comfort, base, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects automatically. The dynamic method will utilize certain rule based approaches including checking for bigrams that are <adj><noun> pairs.Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. We can create an inverted index of these terms and the sentences they occurred in. We can also easily use the list of sentences to find the frequency of aspects in the review corpus.
 	\end{enumerate}
 \item Post-processing stage: Aggregation
 	\begin{enumerate}[label* = \arabic*.]
-	\item Average the sentiment scores from each sentiment the aspect was tagged in to give an output sentiment score for the aspect. We can then output the sentence with highest sentiment score tagged with that aspect with same sign as output sentiment score for the aspect.
+	\item We need to summarize the aspect information we have and present sentences from the corpus that best represent the corpus. One way to do this is to rank the aspects based on frequency and then calculate an averaged sentiment score, which can be used to determine which sentiment polarity the majority of the reviews have with respect to that aspect. We can then take a sentence to represent this aspect. A simple scheme could be to find the sentence with the greatest magnitude sentiment score with the same polarity as the aspect average score.
 	\end{enumerate}
 \end{enumerate}
 Evaluation: Compare the results with annotated libraries of training and testing data from a project on reviews to find our accuracy on tagging aspect features and sentiment intensity/polarity.
-
+After that we will have to do manual surveying from people of the different summarization techniques that we can use.
 \section{Progress}
 \begin{enumerate}
 \item Refinement of Problem and General Approach
 	\begin{enumerate} [label* = \arabic*.]
-	\item We have decided to change the problem and our approach to it to focus more on the text summarization aspect of the project rather than the dashboard GUI. We have refined our project to be an attempt to make a framework to summarize the Amazon reviews with respect to the features of the reviewed product. We specifically have chosen headphones to shrink the scope of the problem and focus on one specific product area. Given a corpus of reviews for a headphone product, and our framework will be able to output a list of sentences that best summarize the sentiment in the reviews towards the product and its features.
+	\item We have decided to change the problem and our approach to it to focus more on the text summarization aspect of the project rather than the dashboard GUI. We have refined our project to be an attempt to make a framework to summarize the Amazon reviews with respect to the features of the reviewed product. We no longer focus on the ability to compare other brands. We specifically have chosen headphones to shrink the scope of the problem and focus on one specific product area. Given a corpus of reviews for a headphone product, our framework will be able to output a list of sentences that best summarize the sentiment in the reviews towards the product and its features.
 	\item Our new approach adapts a technique described in a 2008 paper about using a lexicon based system for summarizing review sentiment in relation to local services such as restaurants and hotels. To improve on this technique, we will also be doing feature engineering to improve the accuracy using prior mined information about the product. This takes place in the pre-processing stage described above, in which we generate relevant features from product descriptions and prior knowledge about headphones.
 	\end{enumerate}
 \item Project Progress \\
@@ -119,11 +118,6 @@ Evaluation: Compare the results with annotated libraries of training and testing
 	\item 
 	\end{enumerate}
 \end{enumerate}
-
-IS THE BELOW GOING TO BE COMPLETE? IF SO PLEASE STATE IN PRESENT TENSE. IF NOT I'M NOT SURE WHY IT'S HERE....SINCE THE GENERAL APPROACH HAS BEEN DESCRIBED ABOVE? UNLESS YOU ARE ELABORATING. 
-Following this, we will use a binary classifier to determine if the sentence's sentiment polarity is neutral or has sentiment. If the polarity is too low then we will discard the sentence. \\
-At this point pre-processing is complete and we will get into the main part of the system. Next, we will tag each sentence with any aspect features it may contain and create an inverted index of aspect features mapped to the sentences they occurred in. An aspect feature is defined as a phrase or group of words that describe a specific feature of the product. Following this we can rank the aspect features based on their frequency of occurrence in the data set.\\
-At this point we need to aggregate the sentiments associated with each aspect feature, a simple approach could be based on averaging the sentiment scores towards a product.\\
 
 \section{Resources}
 

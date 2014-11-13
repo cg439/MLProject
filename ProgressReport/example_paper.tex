@@ -88,7 +88,7 @@ We will restrict our focus to one type of product (headphones) to make evaluatio
 	This will be done with a combined static and dynamic technique.
 		\begin{enumerate} [label* = \arabic*.]
 	\item Static Technique \\
-	 Generate important aspects from product descriptions scraped from Amazon.com by using a TFIDF weighting scheme from NLTK. These words, along with the words sound, audio, comfort, base, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects automatically.
+	 Generate important aspects from product descriptions scraped from Amazon.com by using a TFIDF weighting scheme from NLTK. These words, along with the words sound, audio, comfort, bass, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects automatically.
 	\item Dynamic Technique \\
 	 Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. We can create an inverted index of these terms and the sentences they occurred in. We can also easily use the list of sentences to find the frequency of aspects in the review corpus.
 	\end{enumerate}
@@ -106,7 +106,7 @@ After that we will have to do manual surveying from people of the different summ
 \item Refinement of Problem and General Approach
 	\begin{enumerate} [label* = \arabic*.]
 	\item We have decided to change the problem and our approach to it to focus more on the text summarization aspect of the project rather than the dashboard GUI. We have refined our project to be an attempt to make a framework to summarize the Amazon reviews with respect to the features of the reviewed product. We no longer focus on the ability to compare other brands. We specifically have chosen headphones to shrink the scope of the problem and focus on one specific product area. Given a corpus of reviews for a headphone product, our framework will be able to output a list of sentences that best summarize the sentiment in the reviews towards the product and its features.
-	\item Our new approach adapts a technique described in a 2008 paper about using a lexicon based system for summarizing review sentiment in relation to local services such as restaurants and hotels. To improve on this technique, we will also be doing feature engineering to improve the accuracy using prior mined information about the product. This takes place in the pre-processing stage described above, in which we generate relevant features from product descriptions and prior knowledge about headphones.
+	\item Our new approach adapts a technique described in a 2008 paper about using a lexicon based system for summarizing review sentiment in relation to local services such as restaurants and hotels. To improve on this technique, we will also be doing feature engineering to improve the accuracy using prior mined information about the product. This takes place in the processing stage described above, in which we generate relevant features from product descriptions and prior knowledge about headphones.
 	\end{enumerate}
 \item Project Progress 
 	\begin{enumerate} [label* = \arabic*.]
@@ -118,7 +118,7 @@ After that we will have to do manual surveying from people of the different summ
 	\item Review Syntax \\
 	Reviews may contain misspelled words, slang, or contractions that must be escaped. To resolve this issue, we will be using NLP's similar words function and slang libraries to match up the words with associated relevant features. To escape contractions, the text will be pre-processed before being parsed and matched up with the list of important aspects.
 	\item Lack of Product Description \\
-	If an item has no product description, we plan to simply parse its name and give it a generic list of words (as listed in the general approach) as its important features.
+	If an item has no product description, we plan to simply parse its name and add adjectives from it into the list of important aspects and give it a generic list of words (as listed in the general approach) as its important features.
 	\end{enumerate}
 \end{enumerate}
 
@@ -158,7 +158,7 @@ Generation and Summarization \newline
 
 \section{Schedule}
 
-By November $16^{rd}$, complete:
+By November $16^{th}$, complete:
 \begin{itemize}
 \item the web scraper to scrape product descriptions
 \item the static technique of the processing stage 

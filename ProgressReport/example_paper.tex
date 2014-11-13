@@ -60,11 +60,9 @@ Size of team is four people.
 
 \section{Motivation} 
  
-Before making a purchase on Amazon.com, buyers typically read reviews of the product to determine if it will meet their requirements. Although reviews are a great resource, it is very time consuming to read a large volume of reviews to find the information that is relevant to them. Although Amazon attempts to shorten this process by ranking its reviews in order of helpfulness, the top reviews may still not be enough for a buyer to make an informed decision. The top reviews may not address all the product features that the buyer is interested in, may be too old to still be reliable, or may still be considered a top review simply because of visibility. 
+Before making a purchase on Amazon.com, buyers typically read reviews of the product to determine if it will meet their requirements. Although reviews are a great resource, it is very time consuming to read through many to find the information that is relevant to buyers. Furthermore, buyers must filter out a large number of unhelpful reviews. Although Amazon attempts to ease the problem by ranking its reviews in order of helpfulness, the top reviews may not address all the product features that the buyer is interested in, may be too old to still be reliable, or may still be considered a top review simply because of visibility. 
 
-Furthermore, some buyers may go beyond the top reviews to get a majority opinion instead of relying on a few experiences. To do this, they then have to filter through a large number of irrelevant information and still only get a holistic view of what might be the majority opinion.
-
-To solve this issue, we propose to automatically extract relevant information from the entire set of reviews and present it to the potential buyer in a format that makes it easier to digest and to compare different products.
+To solve this issue, we propose to automatically extract relevant information from the entire set of reviews with their related sentiment and present it in a way that is easier to digest and to compare different products.
 
 \section{Statement of Problem and Key Questions} 
 
@@ -91,30 +89,41 @@ We will restrict our focus to one type of product (headphones) to make evaluatio
 \item Processing stage
 	\begin{enumerate} [label* = \arabic*.]
 	\item Using SVM or Naive Bayes annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. 
-	\item Using a parse tree split each sentence into bigrams and trigrams with the grammar format of <adj><noun> to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. Using a hashmap store the phrase with the sentence it came from. Find the frequency of all these phrases in the entire set of sentences from reviews.
+	\item Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. Using a hashmap store the phrase with the sentence it came from. Find the frequency of all these phrases in the entire set of sentences from reviews.
 	\end{enumerate}
 \item Post-processing stage: Aggregation
 	\begin{enumerate}[label* = \arabic*.]
-	\item A simple approach would average the sentiment scores from each sentiment the aspect was tagged in giving an output sentiment score for the aspect. We can then output the sentence with highest sentiment score tagged with that aspect with same sign as output sentiment score for the aspect.
+	\item Average the sentiment scores from each sentiment the aspect was tagged in to give an output sentiment score for the aspect. We can then output the sentence with highest sentiment score tagged with that aspect with same sign as output sentiment score for the aspect.
 	\end{enumerate}
 \end{enumerate}
-Evaluation: Compare the results to the hand annotated results of the Google research document. 
+Evaluation: Compare the results with annotated libraries of training and testing data from a project on reviews to find our accuracy on tagging aspect features and sentiment intensity/polarity.
 
 \section{Progress}
-- What have you done in the three weeks since the proposals were submitted? Are you on track in terms of the schedule proposed?
-We are no longer focusing on the GUI dashboard aspect, and are focusing more on the text summarization aspect of the project. We recently came across a paper from 2008 which discusses a lexicon based system for summarizing review sentiment in relation to local services such as restaurants and hotels. We are planning on adapting this technique to focus on product reviews, while also doing feature engineering to improve the accuracy using prior mined information about the product.\\
-Our scraper is operational for collecting Amazon review data for any given product. We've begun the pre-processing code to process the mined review data.\\
-The procedure involved in the pre-processing is to fragment all the reviews into sentences. Following this, we will use a binary classifier to determine if the sentence's sentiment polarity is neutral or has sentiment. If the polarity is too low then we will discard the sentence. \\
+\begin{enumerate}
+\item Refinement of Problem and General Approach
+	\begin{enumerate} [label* = \arabic*.]
+	\item We have decided to change the problem and our approach to it to focus more on the text summarization aspect of the project rather than the dashboard GUI. We have refined our project to be an attempt to make a framework to summarize the Amazon reviews with respect to the features of the reviewed product. We specifically have chosen headphones to shrink the scope of the problem and focus on one specific product area. Given a corpus of reviews for a headphone product, and our framework will be able to output a list of sentences that best summarize the sentiment in the reviews towards the product and its features.
+	\item Our new approach adapts a technique described in a 2008 paper about using a lexicon based system for summarizing review sentiment in relation to local services such as restaurants and hotels. To improve on this technique, we will also be doing feature engineering to improve the accuracy using prior mined information about the product. This takes place in the pre-processing stage described above, in which we generate relevant features from product descriptions and prior knowledge about headphones.
+	\end{enumerate}
+\item Project Progress \\
+	\begin{enumerate} [label* = \arabic*.]
+	\item Data collection \\
+	The scraper is operational for collecting Amazon review data for any given product. We have already gathered 3,152 reviews and have parsed them into sentences, broken them up into tokens and tagged each token with part of speech. The scraper is currently being updated to intake product descriptions to generate the relevant features using the frequency distribution of words in the combined product descriptions. For analytical purposes, we will be copy and pasting directly into the program for parsing, tagging, and finding the frequency distribution until the scraper is updated. 
+	\end{enumerate} 
+\item Problems 
+	\begin{enumerate} [label* = \arabic*.]
+	\item Review Syntax \\
+	Reviews may contain misspelled words, slang, or contractions that must be escaped. To resolve this issue, we will be using NLP's similar words function and slang libraries to match up the words with associated relevant features. To escape contractions, the text will be pre-processed before being parsed.
+	\item Lack of Product Description \\
+	If an item has no product description, we plan to simply parse its name and give it a generic list of words (as listed in the general approach) as its important features.
+	\item 
+	\end{enumerate}
+\end{enumerate}
+
+IS THE BELOW GOING TO BE COMPLETE? IF SO PLEASE STATE IN PRESENT TENSE. IF NOT I'M NOT SURE WHY IT'S HERE....SINCE THE GENERAL APPROACH HAS BEEN DESCRIBED ABOVE? UNLESS YOU ARE ELABORATING. 
+Following this, we will use a binary classifier to determine if the sentence's sentiment polarity is neutral or has sentiment. If the polarity is too low then we will discard the sentence. \\
 At this point pre-processing is complete and we will get into the main part of the system. Next, we will tag each sentence with any aspect features it may contain and create an inverted index of aspect features mapped to the sentences they occurred in. An aspect feature is defined as a phrase or group of words that describe a specific feature of the product. Following this we can rank the aspect features based on their frequency of occurrence in the data set.\\
 At this point we need to aggregate the sentiments associated with each aspect feature, a simple approach could be based on averaging the sentiment scores towards a product.\\
-2. Feasibility of the project:
-- Are you confident in the feasibility of your schedule in light of the feedback received from the proposal and any changes made to your project?
-We have collected annotated training and test data we can use to benchmark our models on their accuracy with respect to tagging aspect features and sentiment intensity/polarity analysis.
-3. Problems:
-- What (if any) problems are you facing? How are you planning to tackle these problems?
-4. Refinement of problem statement:
-Essentially were attempting to make a framework to summarize the sentiments of Amazon reviews with respect to the features of the reviewed product. We specifically have chosen headphones to shrink the scope of the problem and focus on one specific product area. Our problem is related to NLP as it is a form of text summarization. 
-We are given a corpus of reviews for a headphone product, and we need to be able to output a list of sentences that best summarize the sentiment in the reviews towards the product and its features. 
 
 \section{Resources}
 
@@ -151,19 +160,6 @@ Generation and Summarization \newline
 \end{itemize}
 
 \section{Schedule}
-
-By November $11^{th}$, the due date of the progress report, complete the following:
-
-\begin{itemize}
-\item extract data from Amazon.com either via API or self-implemented scraper; alternatively, use the Stanford dataset
-
-\item parse data into JSON or csv
-
-\item filter out irrelevant reviews and weight constructive reviews more
-
-\item extract sentiments from review data
-
-\end{itemize}
 
 By December $4^{th}$, the due date of the poster, complete:
 \begin{itemize}

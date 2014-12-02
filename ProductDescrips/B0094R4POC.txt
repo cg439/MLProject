@@ -1,0 +1,39 @@
+
+       The Sennheiser sports range is targeted at the sportsmen/sportswomen who are truly passionate about their sports and music.
+      
+       
+      
+         CX 685          Highlights   Natural sound and acoustically closed design    Rugged construction and strain-relief parts   Slide-to-fit mechanism      The CX 685 is part of the Sennheiser/adidas series of sports headphones. Developed and designed with professional athletes, the series offers improved fit, comfort and acoustics for even the toughest workouts. The CX 685 delivers natural sound and an acoustically closed design. The rugged, water resistant construction features para-aramid reinforced cables, strain-relief parts and a slide-to-fit holding mechanism to ensure a perfect fit.  Why Sennheiser? Sennheiser is the brand of choice for many high-profile recording artists and live sound engineers, delivering the ultimate audio experience to people who crave true-to-life sound. For over 65 years, Sennheiser has applied its in-depth audio research to the development of premium headphones and microphones. Every Sennheiser product endures rigorous quality control tests to ensure you receive durable, great-sounding gear that will withstand daily use in a variety of environments.      Features   Para-aramid-reinforced cables for superior strength and durability Perspiration and water resistant Fine-tuned 10mm transducer delivers optimal sound performance EarFin holding system for secure and comfortable fit Slide-to-fit mechanism 2-year warranty        Did you notice? The CX 685 features an acoustically closed design, making it a perfect choice for indoor use. Sennheiser recommends this headphone for ... ... consumers who are passionate about sports and music. Technical The CX 685 SPORTS is an ear-canal phone with a frequency response of 18 to 20,000 Hz. Warranty The CX 685 is covered by a 2-year warranty.   Technical data  Headphones       Frequency response 18-20,000 Hz   Sound pressure level (SPL) 120 dB (1 kHz/1 Vrms)  THD-total harmonic distortion (1 KHz, 100 dB SPL)     Impedence 16 Ω   Weight 149 g      Cable    Length  1.2 m symmetrical cable    Connector plugs 3.5 mm angled plug    Warranty        2-year      What's in the box?   CX 685ear adapter setcleaning toolcable clipstorage pouch       
+    
+    window.ue_csm.cel_widgets = [
+         {  id: "detail-bullets"  } , {  id: "featurebullets_feature_div"  } , {  id: "summaryContainer"  } , {  s: "#revMHRL > DIV"  , id_gen: function(elem, index) { return 'custRev' + (index + 1); }  } , {  id: "sims_fbt"  } , {  id: "purchase-sims-feature"  } , {  id: "session-sims-feature"  } , {  id: "quickPromoBucketContent"  } , {  id: "productDescription"  } , {  id: "technicalSpecifications_feature_div"  } , {  id: "prodDetails"  } , {  id: "related_ads"  } , {  id: "technical-data"  } , {  id: "tagging_lazy_load_div"  } , {  id: "consumption-sims"  } , {  id: "moreBuyingChoices_feature_div"  } , {  id: "product-ads-feedback_feature_div"  } , {  id: "DAcrt"  } , {  id: "vtpsims"  } , {  c: "celwidget"  } , {  id: "fallbacksessionShvl"  } , {  id: "rhf"  } 
+    ];
+
+
+
+
+
+
+(function(c){var a=document.ue_backdetect;if(a&&a.ue_back&&c.ue){c.ue.bfini=a.ue_back.value}if(c.uet){c.uet("be")}if(c.onLdEnd){if(window.addEventListener){window.addEventListener("load",c.onLdEnd,false)}else{if(window.attachEvent){window.attachEvent("onload",c.onLdEnd)}}}if(c.ueh){c.ueh(0,window,"load",c.onLd,1)}if(c.ue&&c.ue.tag){if(c.ue_furl&&c.ue_furl.split){var b=c.ue_furl.split(".");if(b&&b[0]){c.ue.tag(b[0])}}else{c.ue.tag("nofls")}}})(ue_csm);
+
+var ue_pty='Detail', ue_spty='Glance', ue_pti='B0094R4POC'; 
+
+
+
+v
+
+     
+     
+
+
+
+
+(function(b,c){var a=c.images;if(a&&a.length){b.ue.count("totalImages",a.length)}})(ue_csm,document);
+
+
+(function(e,c){var a=e.ue,b=c.navigator,d;if(a&&a.tag&&b){d=b.connection||b.mozConnection||b.webkitConnection;if(d&&d.type){a.tag("netInfo:"+d.type)}}})(ue_csm,window);
+
+ 
+      
+       
+      

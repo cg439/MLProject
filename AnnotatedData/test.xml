@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sentences>
+    <sentence id="2339">
+        <text>I charge it at night and skip taking the cord with me because of the good battery life.</text>
+        <aspectTerms>
+            <aspectTerm term="cord" polarity="neutral" from="41" to="45"/>
+            <aspectTerm term="battery life" polarity="positive" from="74" to="86"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="812">
+        <text>I bought a HP Pavilion DV4-1222nr laptop and have had so many problems with the computer.</text>
+    </sentence>
+    <sentence id="1316">
+        <text>The tech guy then said the service center does not do 1-to-1 exchange and I have to direct my concern to the "sales" team, which is the retail shop which I bought my netbook from.</text>
+        <aspectTerms>
+            <aspectTerm term="service center" polarity="negative" from="27" to="41"/>
+            <aspectTerm term="&quot;sales&quot; team" polarity="negative" from="109" to="121"/>
+            <aspectTerm term="tech guy" polarity="neutral" from="4" to="12"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="2328">
+        <text>I investigated netbooks and saw the Toshiba NB305-N410BL.</text>
+    </sentence>
+    <sentence id="2193">
+        <text>The other day I had a presentation to do for a seminar at a large conference in town- lots of people, little time to prep and have to set up a computer to a projector, etc.</text>
+    </sentence>
+    <sentence id="2005">
+        <text>it is of high quality, has a killer GUI, is extremely stable, is highly expandable, is bundled with lots of very good applications, is easy to use, and is absolutely gorgeous.</text>
+        <aspectTerms>
+            <aspectTerm term="quality" polarity="positive" from="14" to="21"/>
+            <aspectTerm term="GUI" polarity="positive" from="36" to="39"/>
+            <aspectTerm term="applications" polarity="positive" from="118" to="130"/>
+            <aspectTerm term="use" polarity="positive" from="143" to="146"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="2789">
+        <text>Easy to start up and does not overheat as much as other laptops.</text>
+        <aspectTerms>
+            <aspectTerm term="start up" polarity="positive" from="8" to="16"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="425">
+        <text>Sad very SAD.</text>
+    </sentence>
+    <sentence id="76">
+        <text>I even got my teenage son one, because of the features that it offers, like, iChat, Photobooth, garage band and more!</text>
+        <aspectTerms>
+            <aspectTerm term="features" polarity="positive" from="46" to="54"/>
+            <aspectTerm term="iChat" polarity="positive" from="77" to="82"/>
+            <aspectTerm term="Photobooth" polarity="positive" from="84" to="94"/>
+            <aspectTerm term="garage band" polarity="positive" from="96" to="107"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="747">
+        <text>Needless to say a PC that can't support a cell phone is less than useless!</text>
+    </sentence>
+    <sentence id="80">
+        <text>Great laptop that offers many great features!</text>
+        <aspectTerms>
+            <aspectTerm term="features" polarity="positive" from="36" to="44"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="796">
+        <text>they have done absolutely nothing to fix the computer problem.</text>
+    </sentence>
+    <sentence id="917">
+        <text> One night I turned the freaking thing off after using it, the next day I turn it on, no GUI, screen all dark, power light steady, hard drive light steady and not flashing as it usually does.</text>
+        <aspectTerms>
+            <aspectTerm term="GUI" polarity="negative" from="89" to="92"/>
+            <aspectTerm term="screen" polarity="negative" from="94" to="100"/>
+            <aspectTerm term="power light" polarity="neutral" from="111" to="122"/>
+            <aspectTerm term="hard drive ligh" polarity="negative" from="131" to="146"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="1788">
+        <text>Still pretty pricey, but I've been putting off money for a while as a little Macbook Fund, and finally got to use it.</text>
+    </sentence>
+    <sentence id="338">
+        <text>My only disappointment with the 13" model is that they're the only ones in the MacBook Pro line up without an i5 or i7 processor and dual graphics cards, however the trade-off is that you achieve a longer battery life (of about 2 more hours).</text>
+        <aspectTerms>
+            <aspectTerm term="processor" polarity="negative" from="119" to="128"/>
+            <aspectTerm term="graphics cards" polarity="negative" from="138" to="152"/>
+            <aspectTerm term="battery life" polarity="positive" from="205" to="217"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="1630">
+        <text>I took it back for an Asus and same thing- blue screen which required me to remove the battery to reset.</text>
+        <aspectTerms>
+            <aspectTerm term="battery" polarity="neutral" from="87" to="94"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="38">
+        <text>In the shop, these MacBooks are encased in a soft rubber enclosure - so you will never know about the razor edge until you buy it, get it home, break the seal and use it (very clever con).</text>
+        <aspectTerms>
+            <aspectTerm term="rubber enclosure" polarity="positive" from="50" to="66"/>
+            <aspectTerm term="edge" polarity="negative" from="108" to="112"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="337">
+        <text>However, the multi-touch gestures and large tracking area make having an external mouse unnecessary (unless you're gaming).</text>
+        <aspectTerms>
+            <aspectTerm term="multi-touch gestures" polarity="positive" from="13" to="33"/>
+            <aspectTerm term="tracking area" polarity="positive" from="44" to="57"/>
+            <aspectTerm term="external mouse" polarity="neutral" from="73" to="87"/>
+            <aspectTerm term="gaming" polarity="neutral" from="115" to="121"/>
+        </aspectTerms>
+    </sentence>
+    <sentence id="1505">
+        <text>Plus it is small and reasonably light so I can take it with me to and from work.</text>
+    </sentence>
+    <sentence id="263">
+        <text>I HATE this one.</text>
+    </sentence>
+    <sentence id="1227">
+        <text>They were totally unconcerned that the computer was not correctly repaired in the first place.</text>
+    </sentence>
+    <sentence id="1019">
+        <text>Toshiba does not send any one out unless you have paid extra to have the on site repair done.</text>
+    </sentence>
+    <sentence id="1158">
+        <text>Oh, boy!</text>
+    </sentence>
+    <sentence id="1168">
+        <text>But while this is one big advantage (as you may know from the company s recent commercials) there are other things to consider before going with Apple.</text>
+    </sentence>
+    <sentence id="2568">
+        <text>I love the way the entire suite of software works together.</text>
+        <aspectTerms>
+            <aspectTerm term="suite of software" polarity="positive" from="26" to="43"/>
+        </aspectTerms>
+    </sentence>

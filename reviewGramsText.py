@@ -4,8 +4,12 @@ bigrams = []
 trigrams = []
 with open('reviews.txt') as f:
 	content = f.readlines()
-	for line in content[:6]:
-		bigrams.append(getGrams.getGrams(line, 2))
-		trigrams.append(getGrams.getGrams(line, 3))
+	for line in content[:10]:
+		bigram = getGrams.getGrams(line, 2)
+		if bigram != []:
+			bigrams.append(bigram)
+		trigram = getGrams.getGrams(line, 3)
+		if trigram != []:
+			trigrams.append(trigram)
 print bigrams 
 print trigrams

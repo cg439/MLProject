@@ -1,6 +1,6 @@
 import parseXML as parse, getGrams 
 
-trainSentences, trainMap = parse.parseXML("AnnotatedData\Laptops_Train.xml")
+trainSentences, trainMap = parse.parseXML("AnnotatedData\\test.xml")
 #testSentences, testMap = parse.parseXML("AnnotatedData\TestData.xml")
 
 def genNgramsMap(trainSentences):
@@ -43,17 +43,24 @@ def getAccuracy(realMap, trainMap):
 
 	for s, i in trainSentences:
 		realTerms = realMap[i]
+		print realTerms
 		trainTerms = trainMap[i]
-		temp = True
-		for real in realTerms:
-			total +=1
-			for fake in trainTerms:
-				boolean = match(real, fake)
-				temp = temp and boolean 
-				if boolean:
-					correct += 1
-				else:
-					incorrect +=1
+		print trainTerms 
+		if (realTerms == [] or trainTerms == []) and not(realTerms == [] and trainTerms == []):
+			temp = False 
+		else:
+			temp = True
+			for real in realTerms:
+				total +=1
+				for fake in trainTerms:
+					boolean = match(real, fake)
+					temp = temp and boolean 
+					if boolean:
+						correct += 1
+					else:
+						incorrect +=1
+		print "did we match all terms? : " + str(temp) 
+		print "num word correct thus far: " + str(correct)
 		if temp:
 			overallCorrect += 1
 		else:

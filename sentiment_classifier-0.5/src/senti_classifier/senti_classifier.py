@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, re, sys, codecs, nltk, argparse, operator
+import os, re, sys, codecs, nltk, argparse, operator, string
 from nltk.corpus import wordnet as wn
 from collections import defaultdict
 import cPickle as pickle
@@ -173,26 +173,28 @@ def SentiWordNet_to_pickle(swn):
         synsets_scores[senti_synset.synset.name]['neg'] += senti_synset.neg_score
     return synsets_scores
 
-def classify(text, synsets_scores, bag_of_words):
+def classify(line, synsets_scores, bag_of_words):
 
     #synsets_scores = pickled object in data/SentiWN.p
     pos = neg = 0
-    for line in text:
-        if not line.strip() or line.startswith('#'):continue
-        for sentence in line.split('.'):
-            sentence = sentence.strip()
-            sent_score_pos = sent_score_neg = 0
-            for word in sentence.split():
-                if disambiguateWordSenses(sentence, word): 
-                    disamb_syn = disambiguateWordSenses(sentence, word).name()
-                    if synsets_scores.has_key(disamb_syn):
-                        #uncomment the disamb_syn.split... if also want to check synsets polarity
-                        if bag_of_words['neg'].has_key(word.lower()):
-                            sent_score_neg += synsets_scores[disamb_syn]['neg']
-                        if bag_of_words['pos'].has_key(word.lower()):
-                            sent_score_pos += synsets_scores[disamb_syn]['pos']
-            pos += sent_score_pos
-            neg += sent_score_neg
+    
+    regex = re.compile('[%s]' % re.escape(string.punctuation))
+    line = regex.sub(' ', line)
+    #print line
+
+    if not line.strip() or line.startswith('#'):return pos, neg
+    word_arr = line.split()
+    #print word_arr
+    for word in word_arr:
+        if disambiguateWordSenses(line, word): 
+            disamb_syn = disambiguateWordSenses(line, word).name()
+            if synsets_scores.has_key(disamb_syn):
+                #uncomment the disamb_syn.split... if also want to check synsets polarity
+                if bag_of_words['neg'].has_key(word.lower()):
+                    neg += synsets_scores[disamb_syn]['neg']
+                if bag_of_words['pos'].has_key(word.lower()):
+                    pos += synsets_scores[disamb_syn]['pos']
+
     return pos, neg
 
 senti_pickle = resource_stream('senti_classifier', 'data/SentiWn.p')
@@ -209,6 +211,8 @@ def polarity_scores(lines_list):
 
 if __name__ == "__main__":
     #print polarity_scores(['Excellent','Worst'])
+    results = []
+    f = open('results_1800-2000.txt', 'w')
     parser = argparse.ArgumentParser(add_help = True)
     parser = argparse.ArgumentParser(description= 'Sentiment classification')
     parser.add_argument('-c','--classify', action="store", nargs = '*', dest="files", type=argparse.FileType('rt'), help='-c reviews')
@@ -217,27 +221,41 @@ if __name__ == "__main__":
         parser.print_help()
         exit("Documentation: %s"%__documentation__)
     for file in myarguments.files:
-        tpos = 0
-        tneg = 0
+        # tpos = 0
+        # tneg = 0
         for lineno, line in enumerate(file.readlines()):
-            line = line.strip()
+            line = unicode(line.strip(), 'utf-8')
+            arr = line.split('***')
+            line = arr[1].strip()
+            s_id = int(arr[0].strip())
+            #print line
             if len(line) == 0: continue
-            r = re.compile("[,.?()\\d]+ *")
-            lines_list = r.split(line)
-            pos, neg = polarity_scores(lines_list)
-            print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(str(lineno)+'. ' + line[:20],pos,neg)
-            tpos += pos
-            tneg += neg
-        print '-'*75
-        if tpos > tneg:
-            positive = file.name + ' ' + 'is Positive'
-            print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(positive, tpos, tneg)
-        else:
-            negative = file.name + ' ' + 'is Negative'
-            print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(negative, tpos, tneg)
-        print  'Overall score of document\nTotal Pos = %s\nTotal Neg = %s'%(tpos, tneg)
-        print '-'*75
-            
+            pos, neg = polarity_scores(line)
+            #print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(pos,neg)
+            print pos, neg
+            if pos > neg:
+                results += ['positive']
+                f.write('%d, %s' % (s_id, 'positive'))
+            elif pos < neg:
+                results += ['negative']
+                f.write('%d, %s' % (s_id, 'negative'))
+            else:
+                results += ['neutral']
+                f.write('%d, %s' % (s_id, 'neutral'))
+            f.write('\n')
+            # tpos += pos
+            # tneg += neg
+        # print '-'*75
+        # if tpos > tneg:
+        #     positive = file.name + ' ' + 'is Positive'
+        #     print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(positive, tpos, tneg)
+        # else:
+        #     negative = file.name + ' ' + 'is Negative'
+        #     print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(negative, tpos, tneg)
+        # print  'Overall score of document\nTotal Pos = %s\nTotal Neg = %s'%(tpos, tneg)
+        # print '-'*75
+        f.close()
+        print results
             
         
 

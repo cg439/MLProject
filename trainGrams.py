@@ -1,6 +1,6 @@
 import parseXML as parse, getGrams 
 
-trainSentences, trainMap = parse.parseXML("AnnotatedData\\test.xml")
+trainSentences, trainMap = parse.parseXML("AnnotatedData\Laptops_Train.xml")
 #testSentences, testMap = parse.parseXML("AnnotatedData\TestData.xml")
 
 def genNgramsMap(trainSentences):
@@ -28,9 +28,19 @@ def genNgramsMap(trainSentences):
 	return biGramMap, triGramMap
 
 def match(real, train):
-	if real.find(train) != -1 or train.find(real)!= -1:
+	real = real.strip("")
+	if train.find(real)!= -1:
 		return True
 	return False 
+
+def isIn(x, l2):
+	if x in l2:
+		return True
+	else:
+		for y in l2:
+			if match(x, y):
+				return True
+		return False
 
 def getAccuracy(realMap, trainMap):
 	correct = 0
@@ -41,42 +51,61 @@ def getAccuracy(realMap, trainMap):
 	overallIncorrect = 0
 	overallTotal = len(trainSentences)
 
+	falseNegatives = 0
+	falsePostiives = 0 
+
 	for s, i in trainSentences:
 		realTerms = realMap[i]
-		print realTerms
+		print "actual terms: " + str(realTerms)
 		trainTerms = trainMap[i]
-		print trainTerms 
+		print "train terms: " + str(trainTerms) 
+
+		trainCount = len(trainTerms)
+		realCount = len(realTerms)
+
+		if (trainCount - realCount) > 0:
+			falsePostiives += trainCount - realCount
+		elif (trainCount - realCount) < 0:
+			falseNegatives += realCount - trainCount
+		else:
+			falsePostiives += 0
+
+		total += len(realTerms)
+
 		if (realTerms == [] or trainTerms == []) and not(realTerms == [] and trainTerms == []):
 			temp = False 
 		else:
 			temp = True
 			for real in realTerms:
-				total +=1
-				for fake in trainTerms:
-					boolean = match(real, fake)
-					temp = temp and boolean 
-					if boolean:
-						correct += 1
-					else:
-						incorrect +=1
+				real = real.strip('""')
+				boolean = isIn(real, trainTerms)
+				temp = temp and boolean 
+				if boolean:
+					correct += 1
+				else:
+					incorrect +=1
 		print "did we match all terms? : " + str(temp) 
 		print "num word correct thus far: " + str(correct)
+		print "total word count thus far: " + str(total)
 		if temp:
 			overallCorrect += 1
 		else:
 			overallIncorrect +=1 
+
 	wordAccuracy = float(correct)/total
 	overallAccuracy = float(overallCorrect)/overallTotal
 
-	return wordAccuracy, overallAccuracy		
+	return wordAccuracy, overallAccuracy, falseNegatives, falsePostiives, total 	
 
 bMap, tMap = genNgramsMap(trainSentences)
-bWordAccuracy, bOverallAccuracy = getAccuracy(trainMap, bMap)
-tWordAccuracy, tOverallAccuracy = getAccuracy(trainMap, tMap)
+bWordAccuracy, bOverallAccuracy, bfalseNeg, bfalsePos, bTotal = getAccuracy(trainMap, bMap)
+tWordAccuracy, tOverallAccuracy, tfalseNeg, tfalsePos, tTotal = getAccuracy(trainMap, tMap)
 
-print "bigrams per word accuracy: " + str(bWordAccuracy) + " per sentence accuracy: " + str(bOverallAccuracy) 
-print "trigrams per word accuracy: " + str(tWordAccuracy) + " per sentence accuracy: " + str(tOverallAccuracy) 
+bigramResult = "chunking with grammar: <JJ><NN>: bigrams per term accuracy: " + str(bWordAccuracy) + " per sentence accuracy: " + str(bOverallAccuracy) + " false negatives: " + str(bfalseNeg) + " false positives: " + str(bfalsePos) + " total terms: " + str(bTotal) + "\n"
+trigramResult =  "chunking with grammar: <DT><JJ><NN>: trigrams per term accuracy: " + str(tWordAccuracy) + " per sentence accuracy: " + str(tOverallAccuracy) + " false negatives: " + str(tfalseNeg) + " false positives: " + str(tfalsePos) +  " total terms: " + str(tTotal) + "\n" 
 
-#running with "NP: {<JJ>*<NN>*}" and "NP: {<DT>?<JJ>*<NN>*}"
-# bigrams per word accuracy: 0.554572271386 per sentence accuracy: 0.558070866142
-# trigrams per word accuracy: 0.320269700801 per sentence accuracy: 0.527559055118
+with open("results.txt", "a") as f:
+	f.write(bigramResult)
+	f.write(trigramResult)
+
+

@@ -1,0 +1,17 @@
+chunking with grammar: <JJ>?<NN>?: bigrams per term accuracy: 0.378845343447 per sentence accuracy: 0.229658792651 false negatives: 156 false positives: 6339 total terms: 2373
+chunking with grammar: <DT>*<JJ>*<NN>*: trigrams per term accuracy: 0.524652338812 per sentence accuracy: 0.278543307087 false negatives: 118 false positives: 6613 total terms: 2373
+
+chunking with grammar: <JJ>*<NN>*: bigrams per term accuracy: 0.524230931311 per sentence accuracy: 0.301837270341 false negatives: 183 false positives: 5342 total terms: 2373
+chunking with grammar: <DT>?<JJ>*<NN>*: trigrams per term accuracy: 0.524652338812 per sentence accuracy: 0.278543307087 false negatives: 115 false positives: 6657 total terms: 2373
+
+chunking with grammar: <JJ><NN>*: bigrams per term accuracy: 0.126000842815 per sentence accuracy: 0.306758530184 false negatives: 1031 false positives: 1466 total terms: 2373
+chunking with grammar: <DT>?<JJ><NN>*: trigrams per term accuracy: 0.126000842815 per sentence accuracy: 0.306758530184 false negatives: 1029 false positives: 1469 total terms: 2373
+
+chunking with grammar: <JJ><NN>: bigrams per term accuracy: 0.0779603876949 per sentence accuracy: 0.42782152231 false negatives: 1819 false positives: 410 total terms: 2373
+chunking with grammar: <DT><JJ><NN>: trigrams per term accuracy: 0.0400337126001 per sentence accuracy: 0.453412073491 false negatives: 2068 false positives: 250 total terms: 2373
+
+chunking with grammar: <JJ>*<NN>: bigrams per term accuracy: 0.366624525917 per sentence accuracy: 0.268044619423 false negatives: 327 false positives: 4668 total terms: 2373
+chunking with grammar: <DT>?<JJ><NN>: trigrams per term accuracy: 0.0779603876949 per sentence accuracy: 0.42782152231 false negatives: 1819 false positives: 410 total terms: 2373
+
+chunking with grammar: <JJ>*<NN>?: bigrams per term accuracy: 0.391487568479 per sentence accuracy: 0.234908136483 false negatives: 162 false positives: 6235 total terms: 2373
+chunking with grammar: <DT>*<JJ>*<NN>?: trigrams per term accuracy: 0.391487568479 per sentence accuracy: 0.211614173228 false negatives: 103 false positives: 7541 total terms: 2373

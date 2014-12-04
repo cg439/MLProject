@@ -15,3 +15,4 @@ chunking with grammar: <DT>?<JJ><NN>: trigrams per term accuracy: 0.077960387694
 
 chunking with grammar: <JJ>*<NN>?: bigrams per term accuracy: 0.391487568479 per sentence accuracy: 0.234908136483 false negatives: 162 false positives: 6235 total terms: 2373
 chunking with grammar: <DT>*<JJ>*<NN>?: trigrams per term accuracy: 0.391487568479 per sentence accuracy: 0.211614173228 false negatives: 103 false positives: 7541 total terms: 2373
+

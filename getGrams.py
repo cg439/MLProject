@@ -5,9 +5,9 @@ Returns a list of of n-grams, where an n-gram is a n-sized list of tuples
 Throws exceptions if sentence is empty of num != 2 or num !=3 """
 def getGrams(sentence, num):
 	if num == 2:
-		grammar = "NP: {<JJ>*<NN>?}"
+		grammar = "NP: {<JJ>*<NN>*}"
 	elif num == 3:
-		grammar = "NP: {<DT>*<JJ>*<NN>?}"
+		grammar = "NP: {<DT>?<JJ>*<NN>*}"
 	else:
 		raise Exception("n-gram size must be 2 or 3.") 
 	cp = nltk.RegexpParser(grammar)

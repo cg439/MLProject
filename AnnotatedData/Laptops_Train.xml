@@ -2567,7 +2567,7 @@
     <sentence id="1196">
         <text>The Apple will run Internet Explorer, but at an amazingly slow rate.</text>
         <aspectTerms>
-            <aspectTerm term="Internet Explorer" polarity="conflict" from="19" to="36"/>
+            <aspectTerm term="Internet Explorer" polarity="negative" from="19" to="36"/>
         </aspectTerms>
     </sentence>
     <sentence id="761">

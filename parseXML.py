@@ -1,7 +1,7 @@
 import operator
 
 def parseXML(filename, senti=False):
-	sentences = []
+	sentences = {}
 	termMap = {}
 	senti_dict = {}
 
@@ -18,7 +18,7 @@ def parseXML(filename, senti=False):
 				sentParted = next.partition("<text>")
 				sentEndParted = sentParted[2].partition("</text>")
 				sentence = sentEndParted[0]
-				sentences.append((sentence, sentId))
+				sentences[sentId] = sentence
 				i+=1
 				if "<aspectTerms>" in content[i]:
 					count = {}
@@ -59,14 +59,15 @@ def parseXML(filename, senti=False):
 s, t, d = parseXML('AnnotatedData/Laptops_Train.xml', senti = True)
 senti_f = open('testdatawithsenti.txt', 'w')
 for k in d:
-	senti_f.write(','.join(map(str, [k, d[k]])))
-	senti_f.write('\n')
+	if d[k] in ('positive', 'negative'):
+		senti_f.write('%s *** %s *** %s' % (k, d[k], s[k]))
+		senti_f.write('\n')
 senti_f.close()
 
 
 s_f = open('parsedSentences.txt', 'w')
 for sentence in s:
-	s_f.write('%s *** %s\n' % (sentence[1], sentence[0]))
+	s_f.write('%s *** %s\n' % (sentence, s[sentence]))
 s_f.close()
 
 

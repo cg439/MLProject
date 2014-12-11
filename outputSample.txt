@@ -1,0 +1,172 @@
+the	purchase	price			135	0	0	0	Y
+notable					0	0	0	0	N
+These					0	0	0	0	N
+use					350	0	0	0	Y
+some					0	0	0	0	N
+the	design				135	315	0	0	Y
+cord					0	0	0	0	N
+a	portable	set			19	0	0	738	Y
+music					515	0	0	0	Y
+a	day				19	0	0	0	Y
+comfort					841	0	0	0	Y
+good	noise	isolation			0	970	0	269	Y
+a	cabinetmaker				19	0	0	0	Y
+durability					0	0	0	0	N
+quality					219	0	0	0	Y
+relative	price				0	0	0	0	N
+a	factor				19	0	0	0	Y
+an					19	0	0	0	Y
+6th	Generation				0	0	0	0	N
+the	back				135	949	0	0	Y
+shirt	collar				0	0	0	0	N
+a					19	0	0	0	Y
+bluetooth	receiver				0	0	0	0	N
+Both					0	0	0	0	N
+these	allow				553	0	0	0	Y
+the					135	0	0	0	Y
+back					949	0	0	0	Y
+way					0	0	0	0	N
+having					0	0	0	0	N
+a	player				19	0	0	0	Y
+hip					0	0	0	0	N
+pocket					0	0	0	0	N
+A	microphone				0	331	0	0	Y
+all					491	0	0	0	Y
+that	important				365	0	0	0	Y
+this					589	0	0	0	Y
+phone					12	0	0	0	Y
+a	set				19	738	0	0	Y
+earpiece					0	0	0	0	N
+that	purpose.The	reason			365	0	0	0	Y
+regular	music				0	515	0	0	Y
+the	cord				135	0	0	0	Y
+work					0	0	0	0	N
+the	control/mic	portion			135	0	0	0	Y
+unnecessary	bulk				0	0	0	0	N
+isolation					269	0	0	0	Y
+that	design				365	315	0	0	Y
+modest	relative				0	0	0	0	N
+a	full	in-ear	design		19	0	0	508	Y
+these					553	0	0	0	Y
+the	music	curve			135	515	0	0	Y
+a	subjective	evaluation			19	0	0	0	Y
+those					0	0	0	0	N
+good					0	0	0	0	N
+tonal	balance				0	38	0	0	Y
+natural					0	0	0	0	N
+open					0	0	0	0	N
+this	price	point			589	0	0	0	Y
+enjoyable					0	0	0	0	N
+the	go				135	241	0	0	Y
+direct	comparison				0	0	0	0	N
+the	price				135	0	0	0	Y
+clarity					666	0	0	0	Y
+accuracy					0	0	0	0	N
+an	audio	guy			19	209	0	0	Y
+music	rig				515	0	0	0	Y
+house					0	0	0	0	N
+the	ear	reference			135	80	0	0	Y
+all	music	quality			491	515	0	219	Y
+subjective					0	0	0	0	N
+opinion					0	0	0	0	N
+a	good	job			19	0	0	0	Y
+this	level				589	0	0	0	Y
+a	bargain	price	point		19	0	0	0	Y
+The					0	0	0	0	N
+casual	music				0	515	0	0	Y
+					0	0	0	0	N
+distant		soundstage			0	0	0	0	N
+muddy					0	0	0	0	N
+the	mid-bass	region			135	0	0	0	Y
+Both	sound				0	577	0	0	Y
+stock					0	0	0	0	N
+the	sound				135	577	0	0	Y
+each	company	chose			0	0	0	0	N
+different					0	0	0	0	N
+personal	preference				200	0	0	0	Y
+play					945	0	0	0	Y
+several					0	0	0	0	N
+pain					0	0	0	0	N
+the	fit				135	861	0	0	Y
+The	noise	isolation			0	970	0	269	Y
+a	plus				19	0	0	0	Y
+application Now					0	0	0	0	N
+first					0	0	0	0	N
+the	package				135	637	0	0	Y
+leg					0	0	0	0	N
+the	split				135	0	0	0	Y
+the	other				135	0	0	0	Y
+flimsy					0	0	0	0	N
+purpose					0	0	0	0	N
+routing					0	0	0	0	N
+head					445	0	0	0	Y
+a	good	thing			19	0	0	0	Y
+application					0	0	0	0	N
+The	weight				0	0	0	0	N
+location					0	0	0	0	N
+the	splitter				135	0	0	0	Y
+left	earbud				0	828	0	0	Y
+some	activity				0	0	0	0	N
+pull					0	0	0	0	N
+a	distraction				19	0	0	0	Y
+stationary	listening				0	521	0	0	Y
+fine.To					0	0	0	0	N
+fair					0	0	0	0	N
+active	use				0	350	0	0	Y
+sport					151	0	0	0	Y
+fit					861	0	0	0	Y
+the	sound	quality			135	577	0	219	Y
+the	water	resistant	technology		135	0	0	0	Y
+the	potential				135	0	0	0	Y
+the	overall	sound	quality		135	0	0	577	Y
+set					738	0	0	0	Y
+look					0	0	0	0	N
+similar					0	0	0	0	N
+the	dust				135	0	0	0	Y
+service					0	0	0	0	N
+a	good	run			19	0	0	0	Y
+heavy	use	)			0	350	0	0	Y
+The	fit				0	861	0	0	Y
+terrific					0	0	0	0	N
+decent	(				0	0	0	0	N
+thin					727	0	0	0	Y
+moderate	volume				0	678	0	0	Y
+heavy	material				0	0	0	0	N
+sound	quality				577	219	0	0	Y
+some	new				0	0	0	0	N
+a	huge	advantage			19	0	0	0	Y
+this	older				589	0	0	0	Y
+a	short	cord	length		19	0	0	0	Y
+an	extender				19	0	0	0	Y
+This					0	0	0	0	N
+shirt	collar	music	player		0	0	0	515	Y
+a	few				19	0	0	0	Y
+produce					0	0	0	0	N
+a	shorter	cord	length		19	0	0	0	Y
+SPORT",					0	0	0	0	N
+the	mobile	version			135	324	0	0	Y
+no	longer				970	0	0	0	Y
+this	option.Ultimately				589	0	0	0	Y
+a	backup	set			19	0	0	738	Y
+casual	listening				0	521	0	0	Y
+the	house				135	0	0	0	Y
+airplane					0	0	0	0	N
+the	isolation				135	269	0	0	Y
+worth					0	0	0	0	N
+every	day	work	setup		125	0	0	0	Y
+hunting					0	0	0	0	N
+cord	option				0	0	0	0	N
+Next	up				0	258	0	0	Y
+try					0	0	0	0	N
+own					0	0	0	0	N
+685sPotential					0	0	0	0	N
+durable					0	0	0	0	N
+symmetrical	cord	split	design		0	0	0	0	N
+noise	isolation				970	269	0	0	Y
+fit					861	0	0	0	Y
+sport	design				151	315	0	0	Y
+water	resistant				0	0	0	0	N
+cord	length				0	0	0	0	N
+a	short	cord	version		19	0	0	0	Y
+shorter	cord				0	0	0	0	N
+all	day	comfort			491	0	0	841	Y

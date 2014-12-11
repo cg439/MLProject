@@ -176,6 +176,9 @@ respectively. Another shortcoming we had with sentiment analysis of sentences us
 
 The LDA analysis did reveal words which helped filter down the results from the n-gram generator, however it revealed shortcomings in the word bank. For one thing, compound words like ear-piece that contain relevant words were ignored when we filtered the trigrams/bigrams. We also did not take into account morphological relations which stemming could have helped with. Using an approach which also tried to measure semantic relevance to describe word relations would also help for this as then we can relate aqua and water which have different morphological roots but the same semantic root. Using documents that aren't as short would also help, equalizing the document lengths for future LDA or ensuring it is above a certain threshold. Trying LDA on the questions that consumers post would also provide a different perspective which can help consolidate where the seller is correctly interpreting customer priorities and where they are not to reveal the deficiencies in the LDA data. 
 
+To improve on the n-gram generator, as mentioned before, would be to find more specific grammars since the current ones generate lots of false positives. It would be better to not only POS tag but also consider the context of the chunk to either add more words into the chunk or remove irrelevant parts of the chunk. For example, the chunker will sometimes drop a noun even if it is relevant to the phrase. To do this, it may be necessary to train a decision tree or naive bayes algorithm to decide whether or not to include the next term given the current set of terms in the chunk and their POS tags. 
+
+
 \section{Conclusion}
 \section{Resources}
 

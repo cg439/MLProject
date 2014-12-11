@@ -1,15 +1,13 @@
-xmlfile = open('testdatawithsenti.txt')
-testfile = open('results')
+xmlfile = open('fulldata.txt')
+testfile = open('results320')
 
 xmldict = {}
 testdict = {}
 
-TOTAL = 1492
 accuracy = 0.0
 correct_count = 0.0
 falseneg = 0.0
 falsepos = 0.0
-falseonneutral = 0.0
 totalcount = 0.0
 
 for line in xmlfile.read().strip().splitlines():
@@ -33,9 +31,6 @@ for line in testfile.read().strip().splitlines():
 		elif polarity == 'positive' and xmldict[s_id] == 'negative':
 			falsepos += 1
 			totalcount += 1
-		elif polarity != 'neutral' and xmldict[s_id] == 'neutral':
-			falseonneutral += 1
-
 
 
 accuracy = correct_count / totalcount

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, re, sys, codecs, nltk, argparse, operator, string
+import os, re, sys, codecs, nltk, argparse, operator, string, math
 from nltk.corpus import wordnet as wn
 from collections import defaultdict
 import cPickle as pickle
@@ -8,12 +8,9 @@ import nltk.classify.util
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import movie_reviews
 from nltk.corpus import sentiwordnet
+from nltk import PorterStemmer
 
 """
-Interface to SentiWordNet using the NLTK WordNet classes.
-
----Chris Potts
-
 Sentiment Classifier & WSD Module
 
 --Pulkit Kathuria
@@ -21,6 +18,8 @@ Sentiment Classifier & WSD Module
 __documentation__ = "http://www.jaist.ac.jp/~s1010205/sentiment_classifier"
 __url__ = "http://www.jaist.ac.jp/~s1010205/"
 __online_demo__ = "http://www.jaist.ac.jp/~s1010205/sentiment_classifier"
+ps = PorterStemmer()
+inputfile = outputfile = ''
 
 class SentiWordNetCorpusReader:
     def __init__(self, filename):
@@ -96,15 +95,11 @@ class SentiSynset:
     def __repr__(self):
         return "Senti" + repr(self.synset)
 
-def count_features(bag_of_words, features, polarity):
-    for lst in features:
-        for word in lst[0].keys():
-            bag_of_words[polarity][word] += 1
-    return bag_of_words
+
     
 def train_xml_data():
 
-    f = open('testdatawithsenti.txt')
+    f = open(inputfile)
     bag_of_words = {}
     bag_of_words['neg'] = defaultdict(int)
     bag_of_words['pos'] = defaultdict(int)
@@ -114,20 +109,27 @@ def train_xml_data():
 
     for line in f.read().strip().splitlines():
         line = unicode(line.strip(), 'utf-8')
-        arr = line.split('***')
-        sentence = arr[2].strip()
-        regex = re.compile('[%s]' % re.escape(string.punctuation))
-        sentence = regex.sub(' ', sentence)
-        polarity = arr[1].strip()[:3]
+        if line:
+            arr = line.split('***')
+            sentence = arr[2].strip()
+            regex = re.compile('[%s]' % re.escape(string.punctuation))
+            sentence = regex.sub(' ', sentence)
+            polarity = arr[1].strip()[:3]
 
-        if polarity in ('pos', 'neg'):
-            words = sentence.split()
-            for word in words:
-                if word not in bag_of_words[polarity]:
-                    bag_of_words[polarity][word] = 1
-                else:
-                    bag_of_words[polarity][word] += 1
+            if polarity in ('pos', 'neg'):
+                words = sentence.split()
+                for word in words:
+                    if word not in bag_of_words[polarity]:
+                        bag_of_words[polarity][ps.stem_word(word)] = 1
+                    else:
+                        bag_of_words[polarity][ps.stem_word(word)] += 1
 
+    return bag_of_words
+
+def count_features(bag_of_words, features, polarity):
+    for lst in features:
+        for word in lst[0].keys():
+            bag_of_words[polarity][ps.stem_word(word.lower())] += 1
     return bag_of_words
 
 def train_bag_of_words():
@@ -136,7 +138,7 @@ def train_bag_of_words():
       bag_of_words['neg']['word'] ==> count
       bag_of_words['pos']['word'] ==> count
     """
-    def word_feats(words): return dict([(word, True) for word in words])
+    def word_feats(words): return dict([(ps.stem_word(word.lower()), True) for word in words])
     bag_of_words = {}
     bag_of_words['neg'] = defaultdict(int)
     bag_of_words['pos'] = defaultdict(int)
@@ -158,6 +160,16 @@ def classify_polarity(bag_of_words):
         else: bag_of_words['neg'].pop(word)
     return bag_of_words
                     
+
+def combine_bag_of_words(xml, movie):
+    for k in movie:
+        for key, value in movie[k].iteritems():
+            if key not in xml[k]:
+                xml[k][ps.stem_word(key)] = int(value)
+            else:
+                xml[k][ps.stem_word(key)] += int(value)
+    return xml
+
 """
 Word Disambiguator using nltk
 Sentiment Classifier as a combination of
@@ -176,6 +188,16 @@ def word_similarity(word1, word2):
            if (current > maxsim and current > 0):
                maxsim = current
    return maxsim
+
+def SentiWordNet_to_pickle(swn):
+    synsets_scores = defaultdict(list)
+    for senti_synset in swn.all_senti_synsets():
+        if not synsets_scores.has_key(senti_synset.synset.name):
+            synsets_scores[senti_synset.synset.name] = defaultdict(float)
+        synsets_scores[senti_synset.synset.name]['pos'] += senti_synset.pos_score
+        synsets_scores[senti_synset.synset.name]['neg'] += senti_synset.neg_score
+    return synsets_scores
+
 def disambiguateWordSenses(sentence, word):
     wordsynsets = wn.synsets(word)
     bestScore = 0.0
@@ -194,15 +216,6 @@ def disambiguateWordSenses(sentence, word):
               result = synset
     return result
 
-def SentiWordNet_to_pickle(swn):
-    synsets_scores = defaultdict(list)
-    for senti_synset in swn.all_senti_synsets():
-        if not synsets_scores.has_key(senti_synset.synset.name):
-            synsets_scores[senti_synset.synset.name] = defaultdict(float)
-        synsets_scores[senti_synset.synset.name]['pos'] += senti_synset.pos_score
-        synsets_scores[senti_synset.synset.name]['neg'] += senti_synset.neg_score
-    return synsets_scores
-
 def classify(line, synsets_scores, bag_of_words):
 
     #synsets_scores = pickled object in data/SentiWN.p
@@ -217,6 +230,8 @@ def classify(line, synsets_scores, bag_of_words):
     #print word_arr
     for word in word_arr:
         #print word
+        word = ps.stem_word(word)
+        # if len(word_arr) > 6:
         if disambiguateWordSenses(line, word): 
             #print 'after if'
             disamb_syn = disambiguateWordSenses(line, word).name()
@@ -224,22 +239,23 @@ def classify(line, synsets_scores, bag_of_words):
                 #print "after has key"
                 #uncomment the disamb_syn.split... if also want to check synsets polarity
                 if bag_of_words['neg'].has_key(word.lower()):
-                    neg += synsets_scores[disamb_syn]['neg']
+                    neg += math.log(bag_of_words['neg'][word]+1) * synsets_scores[disamb_syn]['neg']
                 if bag_of_words['pos'].has_key(word.lower()):
-                    pos += synsets_scores[disamb_syn]['pos']
-
+                    pos += math.log(bag_of_words['pos'][word]+1) * synsets_scores[disamb_syn]['pos']
     return pos, neg
 
-senti_pickle = resource_stream('senti_classifier', 'data/SentiWn.p')
-# bag_of_words_pickle = resource_stream('senti_classifier', 'data/bag_of_words.p')
-synsets_scores = pickle.load(senti_pickle)
-# bag_of_words = pickle.load(bag_of_words_pickle)
-# bag_of_words = classify_polarity(bag_of_words)
-bag_of_words = train_xml_data()
+args = sys.argv
+outputfile = args[1]
+inputfile = args[2]
+testf = args[3]
 
-# swn = SentiWordNetCorpusReader('swn.txt')
-# synsets_scores = SentiWordNet_to_pickle(swn)
-#bag_of_words = train_bag_of_words()
+senti_pickle = resource_stream('senti_classifier', 'data/SentiWn.p')
+synsets_scores = pickle.load(senti_pickle)
+bag_of_words_xml = train_xml_data()
+bag_of_words_movie = train_bag_of_words()
+
+bag_of_words = combine_bag_of_words(bag_of_words_xml, bag_of_words_movie)
+
 
 def polarity_scores(lines_list):
 
@@ -248,67 +264,28 @@ def polarity_scores(lines_list):
     return pos, neg
 
 if __name__ == "__main__":
-    #print train_xml_data()
-    # print bag_of_words
-    # print synsets_scores
-    # print polarity_scores('Excellent Worst')
+
     results = []
-    f = open('new_results.txt', 'w')
-    parser = argparse.ArgumentParser(add_help = True)
-    parser = argparse.ArgumentParser(description= 'Sentiment classification')
-    parser.add_argument('-c','--classify', action="store", nargs = '*', dest="files", type=argparse.FileType('rt'), help='-c reviews')
-    myarguments = parser.parse_args()
-    if not myarguments.files:
-        parser.print_help()
-        exit("Documentation: %s"%__documentation__)
-    for file in myarguments.files:
-        # tpos = 0
-        # tneg = 0
-        count = 0
-        for lineno, line in enumerate(file.readlines()):
-            line = unicode(line.strip(), 'utf-8')
-            arr = line.split('***')
-            line = arr[2].strip()
-            s_id = int(arr[0].strip())
-            #print line
-            if len(line) == 0: continue
-            pos, neg = polarity_scores(line)
-            #print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(pos,neg)
-            print line, pos, neg
+    f = open(outputfile, 'w')
 
-            # if abs(pos - neg) <= 0.1:
-            #     results += ['neutral']
-            #     f.write('%d, %s' % (s_id, 'neutral'))
-            # elif (pos - neg) > 0.1:
-            #     results += ['positive']
-            #     f.write('%d, %s' % (s_id, 'positive'))
-            # elif (neg - pos) > 0.1:
-            #     results += ['negative']
-            #     f.write('%d, %s' % (s_id, 'negative'))
+    testfile = open(testf)
 
-            if pos > neg:
-                results += ['positive']
-                f.write('%d, %s' % (s_id, 'positive'))
-            elif pos <= neg:
-                results += ['negative']
-                f.write('%d, %s' % (s_id, 'negative'))
-            # else:
-            #     results += ['neutral']
-            #     f.write('%d, %s' % (s_id, 'neutral'))
-            f.write('\n')
-    #         # tpos += pos
-    #         # tneg += neg
-    #     # print '-'*75
-    #     # if tpos > tneg:
-    #     #     positive = file.name + ' ' + 'is Positive'
-    #     #     print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(positive, tpos, tneg)
-    #     # else:
-    #     #     negative = file.name + ' ' + 'is Negative'
-    #     #     print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(negative, tpos, tneg)
-    #     # print  'Overall score of document\nTotal Pos = %s\nTotal Neg = %s'%(tpos, tneg)
-    #     # print '-'*75
-    #     f.close()
-    #     print results
-            
+    for lineno, line in enumerate(testfile.readlines()):
+        line = unicode(line.strip(), 'utf-8')
+        arr = line.split('***')
+        line = arr[2].strip()
+        s_id = int(arr[0].strip())
+        #print line
+        if len(line) == 0: continue
+        pos, neg = polarity_scores(line)
+        #print '{0:<40}... pos = {1:<5} \tneg = {2:<5}'.format(pos,neg)
+        print line, pos, neg
+        if pos >= neg:
+            results += ['positive']
+            f.write('%d, %s' % (s_id, 'positive'))
+        elif pos < neg:
+            results += ['negative']
+            f.write('%d, %s' % (s_id, 'negative'))
+        f.write('\n')
         
 

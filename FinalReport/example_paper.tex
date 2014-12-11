@@ -19,6 +19,8 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
+%For Tables
+\usepackage{tabularx}
 % As of 2011, we use the hyperref package to produce hyperlinks in the
 % resulting PDF.  If this breaks your system, please commend out the
 % following usepackage line and replace \usepackage{icml2012} with
@@ -102,10 +104,12 @@ To score each sentence with SVM, we use the annotated laptop reviews to create f
 	\item Static Technique \\
 	 Generate important aspects from product descriptions scraped from Amazon.com by using a LDA analysis. These words, along with the words sound, audio, comfort, bass, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects automatically.
 	\item Dynamic Technique \\
-	 Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. We can create an inverted index of these terms and the sentences they occurred in. We can also easily use the list of sentences to find the frequency of aspects in the review corpus.
+	 Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using the word bank generated from the LDA.
 	\end{enumerate}
-		\item Using SVM or Naive Bayes annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. If a sentence has a score below a low threshold then it will be discarded.
+		\item Using SVM, annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. If a sentence has a score below a low threshold then it will be discarded.
 	\end{enumerate}
+\item Post Processing Stage
+The terms will be ranked so that only those with the highest scores will be considered. Sentences containing these terms are returned.
 \end{enumerate}
 Evaluation: We believe the main problem can be solved through a composition of the above techniques to filter neutral sentiments, extract entities that may describe the product, rank the entities based on relevancy to product, followed by ranking the sentiments based on frequency of occurrence or aggregate sentiment towards a given entity.  
 
@@ -125,7 +129,26 @@ In order to determine if a review sentence is opinionated, we need to be able to
 
 One of the two approaches was using SentiWordNet and WSD to train and test a sentiment classifier on the annotated laptop reviews. Since only the opinionated sentences were relevant to our project and that SentiWordNet only supports a binary classification of either positive or negative, all the “neutral” data samples were ignored, which left us with 1220 annotated sentences. The sentences had aspect terms marked for each of them, and each aspect term had a sentiment. We simply took the majority vote on the sentiment of the overall sentence based on the sentiments of the aspect terms. The algorithm works as described in section 2.2, and we tested it with a four-fold cross validation methodology in which each fold included 900 samples used as training data and the other 320 used as testing data. The accuracies were obtained by checking the classification produced by our algorithm against the assigned sentiment of the sentence from applying majority vote on its aspect terms’ sentiments. Below are the results:
 
-Our other approach was using SVM to train and test a sentiment classifier on the same annotated laptop reviews. To preserve consistency with our other method of evaluating sentiment, we also ignore all “neutral” data samples. The sentences were classified the same way as described above. We trained on a random selection of 70$\%$ of the training data, and used the remaining 30$\%$ as test data. The data was trained and tested with SVMlight on a soft-margin unbiased hyperplane. The results are as follows:
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Fold Num. & Accuracy \% & False Negs. & False Pos. \\ 
+\hline
+1 & 62.50 & 45 & 75 \\ \hline
+2 & 62.81 & 36 & 83 \\ \hline
+3 & 65.20 & 51 & 60 \\ \hline
+4 & 61.88 & 50 & 73 \\ \hline
+\end{tabular}
+
+Average accuracy = 63.05\% \newline
+Our other approach was using SVM to train and test a sentiment classifier on the same annotated laptop reviews. To preserve consistency with our other method of evaluating sentiment, we also ignore all “neutral” data samples. The sentences were classified the same way as described above. We trained on a random selection of 70$\%$ of the training data, and used the remaining 30$\%$ as test data. The data was trained and tested with SVMlight on a soft-margin unbiased hyperplane. The results are as follows: 
+
+\begin{tabularx}{\linewidth}{ |X|X|X| }
+\hline 
+Accuracy \% & Precision & Recall \\ 
+\hline
+74.33 \% & 70.33\% & 81.22\% \\ \hline 
+\end{tabularx}
+
 
 The algorithm for extracting relevant terms from the parse tree was run multiple times using different grammars to chunk on in order to determine which grammar produced the most accurate results. In general, the tree chunked on adj ,noun bigrams or determiner,adj,noun trigrams. The results were checked against the annotated laptop review data we obtained. Majority of the review sentences in that dataset have aspect terms marked, so we checked the bigrams and trigrams produced by our n-gram generator to see if our results matched the annotated aspect terms of that sentence. The results are summarized below: 
 
@@ -138,7 +161,7 @@ The algorithm for extracting relevant terms from the parse tree was run multiple
 \subsection{Discussion}
 The high amount of false positives in term selection via parse tree chunking on bigrams and trigrams is due to the oversensitivity of the chunker. The parse tree will chunk on any phrase that fulfills the grammar, including terms such as “father” or “mother”, which are nouns but irrelevant to the reviews. This implies having contextual information is important and can benefit the n-gram generator. This also implies basic grammar chunkings may not be optimal and more specific grammars may need to be utilized.
 
-The average accuracy for sentiment analysis with SentiWordNet and WSD was not satisfactory for multiple reasons. First, there was not sufficient or accurate training data since the annotated review sentences did not have a sentiment assigned to it as a whole. Instead, each sentence had aspect terms which each had a sentiment assigned, which was not very accurate in reflecting the sentiment of the entire sentence. This would neither of our training data or testing data was particularly reliable. Another issue that comes with this shortage of data means it is highly possible that when classifying a test data sample, relevant terms were ignored because they were not in the bag of words obtained from our training data, which would also negatively affect the overall accuracy. Finally, even though we implemented some level of WSD by assessing path similarities among words in the same sentence and tried to deal with determining which meaning to take for one particular word since a word can have different meaning given its context, but the current approach to realizing WSD is far from perfect, which was another major cause of somewhat low accuracy. 
+The average accuracy for sentiment analysis with SentiWordNet and WSD was not satisfactory for multiple reasons. First, there was not sufficient or accurate training data since the annotated review sentences did not have a sentiment assigned to it as a whole. Instead, each sentence had aspect terms which each had a sentiment assigned, which was not very accurate in reflecting the sentiment of the entire sentence. This means neither of our training data or testing data was particularly reliable. Another issue that comes with this shortage of data means it is highly possible that when classifying a test data sample, relevant terms were ignored because they were not in the bag of words obtained from our training data, which would also negatively affect the overall accuracy. Finally, each word has multiple possible meanings depending on the context it is used, and a lot of the times, the meanings differ much from each other, which posed a major technical difficulty to our sentiment analysis method with WSD and SentiWordNet since it focused on individual words and lacks context. We did implement some level of WSD by assessing path similarities provided by WordNet among words that were in the same sentence, which did provide some context when choosing which meaning of a word the algorithm should pick, but our current approach to fully realizing WSD is far from perfect. Such unresolved issue was another cause of the unsatisfactory accuracy of this particular sentiment analysis algorithm.
 
 Though the terms in LDA seemed to be relevant we need a better evaluation criteria to understand whether the results are valid. It does tell us that the terms found are relevant to the product, but we cannot measure how relevant they are or whether certain terms found are more relevant than others. One way we could theoretically test the effectiveness is by taking several topics extracted and an assortment of words using the topic distributions. We can then try to see whether the topic distributions are consistent with a human's perception of the terms. If we group several words from the same topic together and insert a foreign word, would a person be able to detect the intruder? This is a method that uses human cognition of the topic described through the association of the terms to determine whether the words are cohesively connected enough to be differentiated from a random word.
 
@@ -148,6 +171,9 @@ Our method has two main benefits. One is that it can be reused for many differen
 The other benefit is that we focus on what the users are interested in rather than just summarizing the raw sentiments contained in the text. Through focusing on what the consumer cares about we can target sentiments more relevant to their purchase decision. We also focus only on opinions and don’t attempt to understand factual information that may be provided by the reviewer, which is a tradeoff as we focus on their opinions. Factual information extraction is more of an information retrieval problem, whereas our problem focuses on a summarized interpretation of the author’s opinion towards a product feature.
 
 \section{Future Work}
+There are certainly many aspects we can work on to improve our results. For sentiment analysis, because of the limitation we had with only being able to work with binary classification, “neutral” samples were not included in the process, which could have been a great help in terms of more accurately determining which sentences were relevant. Learning neutrality can also potentially improve the classifier’s learned distinction between positive and negative samples. One possible way of realizing this goal would be to combine pairwise learned classifiers like positive-negative, positive-neutral and negative-neutral,
+respectively. Another shortcoming we had with sentiment analysis of sentences using either of our two approaches was that none of them took into account the sentence structure as a whole, which could have a significant impact on what sentiment a sentence is conveying alongside with which words occurred in that sentence. With this in mind, investigating the possibility of using a decision-tree-based algorithm or random forest to include sentence structure in the classification process would be another promising improvement we could have with sentiment analysis. Our issue, which was mentioned earlier in the paper as well, with not having sufficiently accurate training or testing data needs work as well. Therefore, one other area we could put more effort into would simply be collecting more well-annotated data that provides reliable reference in sentiment classification.
+
 \section{Conclusion}
 \section{Resources}
 

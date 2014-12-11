@@ -100,15 +100,11 @@ To score each sentence with SVM, we use the annotated laptop reviews to create f
 	This will be done with a combined static and dynamic technique.
 		\begin{enumerate} [label* = \arabic*.]
 	\item Static Technique \\
-	 Generate important aspects from product descriptions scraped from Amazon.com by using a TFIDF weighting scheme from NLTK. These words, along with the words sound, audio, comfort, bass, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects automatically.
+	 Generate important aspects from product descriptions scraped from Amazon.com by using a LDA analysis. These words, along with the words sound, audio, comfort, bass, highs, mids, tones, durability, quality, blocking, noise, sharp, deep, and tangle will be considered important aspects automatically.
 	\item Dynamic Technique \\
 	 Using a parse tree split each sentence into bigrams and trigrams with the grammar format of $<$adj$><$noun$>$ to represent candidate product aspects of importance to reviewers. We can filter this list using stopword filters and other grammatical based rules to get rid of false positives. We can create an inverted index of these terms and the sentences they occurred in. We can also easily use the list of sentences to find the frequency of aspects in the review corpus.
 	\end{enumerate}
 		\item Using SVM or Naive Bayes annotate each sentence with a sentiment score based on the previously created list of relevant features for the product. If a sentence has a score below a low threshold then it will be discarded.
-	\end{enumerate}
-\item Post-processing stage: Aggregation
-	\begin{enumerate}[label* = \arabic*.]
-	\item We need to summarize the aspect information we have and present sentences from the corpus that best represent the corpus. One way to do this is to rank the aspects based on frequency and then calculate an averaged sentiment score, which can be used to determine which sentiment polarity the majority of the reviews have with respect to that aspect. We can then take a sentence to represent this aspect. A simple scheme could be to find the sentence with the greatest magnitude sentiment score with the same polarity as the aspect average score.
 	\end{enumerate}
 \end{enumerate}
 Evaluation: We believe the main problem can be solved through a composition of the above techniques to filter neutral sentiments, extract entities that may describe the product, rank the entities based on relevancy to product, followed by ranking the sentiments based on frequency of occurrence or aggregate sentiment towards a given entity.  

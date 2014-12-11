@@ -131,17 +131,19 @@ One of the two approaches was using SentiWordNet and WSD to train and test a sen
 
 The algorithm for extracting relevant terms from the parse tree was run multiple times using different grammars to chunk on in order to determine which grammar produced the most accurate results. In general, the tree chunked on adj ,noun bigrams or determiner,adj,noun trigrams. The results were checked against the annotated laptop review data we obtained. Majority of the review sentences in that dataset have aspect terms marked, so we checked the bigrams and trigrams produced by our n-gram generator to see if our results matched the annotated aspect terms of that sentence. The results are summarized below: 
 
-
 \subsection{Results}
 
 \subsection{Discussion}
 The high amount of false positives in term selection via parse tree chunking on bigrams and trigrams is due to the oversensitivity of the chunker. The parse tree will chunk on any phrase that fulfills the grammar, including terms such as “father” or “mother”, which are nouns but irrelevant to the reviews. This implies having contextual information is important and can benefit the n-gram generator. This also implies basic grammar chunkings may not be optimal and more specific grammars may need to be utilized.
+
+The average accuracy for sentiment analysis with SentiWordNet and WSD was not satisfactory for multiple reasons. First, there was not sufficient or accurate training data since the annotated review sentences did not have a sentiment assigned to it as a whole. Instead, each sentence had aspect terms which each had a sentiment assigned, which was not very accurate in reflecting the sentiment of the entire sentence. This would neither of our training data or testing data was particularly reliable. Another issue that comes with this shortage of data means it is highly possible that when classifying a test data sample, relevant terms were ignored because they were not in the bag of words obtained from our training data, which would also negatively affect the overall accuracy. Finally, even though we implemented some level of WSD by assessing path similarities among words in the same sentence and tried to deal with determining which meaning to take for one particular word since a word can have different meaning given its context, but the current approach to realizing WSD is far from perfect, which was another major cause of somewhat low accuracy. 
+
+Though the terms in LDA seemed to be relevant we need a better evaluation criteria to understand whether the results are valid. It does tell us that the terms found are relevant to the product, but we cannot measure how relevant they are or whether certain terms found are more relevant than others. One way we could theoretically test the effectiveness is by taking several topics extracted and an assortment of words using the topic distributions. We can then try to see whether the topic distributions are consistent with a human's perception of the terms. If we group several words from the same topic together and insert a foreign word, would a person be able to detect the intruder? This is a method that uses human cognition of the topic described through the association of the terms to determine whether the words are cohesively connected enough to be differentiated from a random word.
+
 \section{Related Work}
-We will restrict our focus to one type of product (headphones) to make evaluation easier. We see 3 main stages to this project:
+Our method has two main benefits. One is that it can be reused for many different and related products and those results can be utilized to potentially improve overall accuracy. The sentiment analysis and n-gram generation for the most part can be reused as is. The only thing that needs to be generated product specific is the word bank of context specific terms, though even the process for that is exactly the same, merely the data taken needs to be different.
 
-
-
-
+The other benefit is that we focus on what the users are interested in rather than just summarizing the raw sentiments contained in the text. Through focusing on what the consumer cares about we can target sentiments more relevant to their purchase decision. We also focus only on opinions and don’t attempt to understand factual information that may be provided by the reviewer, which is a tradeoff as we focus on their opinions. Factual information extraction is more of an information retrieval problem, whereas our problem focuses on a summarized interpretation of the author’s opinion towards a product feature.
 
 \section{Future Work}
 \section{Conclusion}
@@ -178,6 +180,20 @@ Readings on Parsing \& Sentiment Analysis:
 Generation and Summarization \newline
 \url{http://www.aclweb.org/anthology/N04-1015}
 \end{itemize}
+
+General code citations
+\begin{itemize}
+\item Sentiment classifier prototype by Kathuria Pulkit 
+\newline
+\url{https://pypi.python.org/pypi/sentiment_classifier}
+
+\item SVM-Light by Thorsten Joachims
+\newline
+\url{http://svmlight.joachims.org/}
+
+\item LDA in JS code by David Mimno
+\newline
+\url{http://mimno.infosci.cornell.edu/jsLDA/index.html}
 
 
 \end{document}

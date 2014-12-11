@@ -158,6 +158,12 @@ The algorithm for extracting relevant terms from the parse tree was run multiple
 \includegraphics[scale = 0.35]{trigramsFalse.jpg}
 
 \subsection{Results}
+For filtering the final output of the n-gram generator, we just checked if any term in the gram generated was in the word bank. If it was, then we assigned the entire term a score of 1 for relevant and a score of zero for irrelevant.
+
+Below is a sample of the results. For a sample of 172 generated trigrams we found that the LDA word bank filtered it to 99 terms with some overestimation of certain terms relevancy and some underestimation of other terms.
+
+For example, the trigram "the ear reference" was considered relevant, however a trigram like "full in-ear design" only picked up design as relevant and ignored the compound term "in-ear" which contained "ear". Similarly semantically related terms like "cord" and "wire" were not associated and thus we may have missed certain relevant terms. We also overestimated relevancy of certain terms, as just having the term "use" contained within a trigram made it relevant. It's possible the original bigram "use" originated from was relevant but once added to our product bank it lost the association to its bigram partner and hence became less useful for context. A system that attempts to extract relevant bigrams and trigrams from the contents of the product descriptions might be better suited to solve this issue. 
+
 \subsection{Discussion}
 The high amount of false positives in term selection via parse tree chunking on bigrams and trigrams is due to the oversensitivity of the chunker. The parse tree will chunk on any phrase that fulfills the grammar, including terms such as “father” or “mother”, which are nouns but irrelevant to the reviews. This implies having contextual information is important and can benefit the n-gram generator. This also implies basic grammar chunkings may not be optimal and more specific grammars may need to be utilized.
 
